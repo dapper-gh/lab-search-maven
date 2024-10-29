@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +13,8 @@ import edu.grinnell.csc207.util.SearchUtils;
 /**
  * Tests of our search methods.
  *
- * @author Your Name Here
- * @author Your Name Here
+ * @author Luis Lopez
+ * @author David William Stroud
  * @author Samuel A. Rebelsky
  */
 public class TestSearch {
@@ -104,4 +103,27 @@ public class TestSearch {
     assertBinarySearchFails(new int[] { 7, 11 }, 20);
   } // testBinarySearchTwo()
 
+  @Test
+  void testBinarySearchDuplicates() throws Exception {
+    int[] dup = new int[] {0, 1, 1, 2, 3, 4};
+    int dupIndex = SearchUtils.binarySearch(dup, 1);
+    assertTrue(
+      dupIndex == 1 || dupIndex == 2,
+      "binarySearch should find one of many duplicate values (index=1 or index=2), found index " + dupIndex
+    );
+  } // testBinarySearchDuplicates()
+
+  @Test
+  void testBinarySearchOdd() throws Exception {
+    assertBinarySearchFinds(2, new int[] {0, 1, 2}, 2);
+    assertBinarySearchFinds(2, new int[] {0, 2, 4, 6, 8, 10, 12}, 4);
+    assertBinarySearchFails(new int[] {-1, 4, 6}, 0);
+  } // testBinarySearchOdd()
+
+  @Test
+  void testBinarySearchEven() throws Exception {
+    assertBinarySearchFinds(2, new int[] {0, 1, 2, 3}, 2);
+    assertBinarySearchFinds(2, new int[] {0, 2, 4, 6, 8, 10, 12, 14}, 4);
+    assertBinarySearchFails(new int[] {-1, 4, 6, 8}, 0);
+  } // testBinarySearchEven()
 } // class TestSearch
