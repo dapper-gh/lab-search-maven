@@ -12,8 +12,8 @@ import edu.grinnell.csc207.util.SearchUtils;
 /**
  * Assorted experiments for searching structures.
  *
- * @author Your Name Here
- * @author Your Name Here
+ * @author Luis Lopez
+ * @author David William Stroud
  * @author Samuel A. Rebelsky (starter code)
  */
 public class SearchExperiments {
@@ -35,6 +35,12 @@ public class SearchExperiments {
                        "victor", "whiskey", "xray", "yankee", "zulu" };
     ArrayList<String> strings = new ArrayList<String>(Arrays.asList(tmp));
 
+    try {
+      String ex1c = SearchUtils.search(strings, (s) -> s.contains("u"));
+      pen.println("The first string of fewer than five letters is " + ex1c);
+    } catch (Exception e) {
+      pen.println("There are no strings of fewer than five letters.");
+    } // try/catch
     pen.close();
   } // main(String[])
 } // class SearchUtils
