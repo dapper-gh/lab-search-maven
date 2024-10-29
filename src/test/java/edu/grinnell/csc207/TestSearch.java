@@ -126,4 +126,24 @@ public class TestSearch {
     assertBinarySearchFinds(2, new int[] {0, 2, 4, 6, 8, 10, 12, 14}, 4);
     assertBinarySearchFails(new int[] {-1, 4, 6, 8}, 0);
   } // testBinarySearchEven()
+
+  @Test
+  void samTest() throws Exception {
+    //   For each s from 1 to 32
+    // Create an array of size s, containing the values 0, 2, 4, ... 2*(s-1)
+    // For all i from 0 to s-1, inclusive
+    for (int i = 1; i <= 32; i ++) {
+      int[] current = new int[i];
+
+      for (int j = 0; j < current.length; j++) {
+        current[j] = 2 * j;
+      } // for
+
+      for (int h = 0; h < current.length; h++ ) {
+        assertBinarySearchFinds(h, current, 2*h);
+        assertBinarySearchFails(current, 2*h+1);
+      } // for
+      assertBinarySearchFails(current, -1);
+    } // for
+  } // samTest()
 } // class TestSearch
