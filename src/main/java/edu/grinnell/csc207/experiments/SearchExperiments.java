@@ -41,6 +41,24 @@ public class SearchExperiments {
     } catch (Exception e) {
       pen.println("There are no strings of fewer than five letters.");
     } // try/catch
+
+    int[] large = new int[50000];
+    for (int i = 0; i < large.length; i++) {
+      large[i] = i * 3;
+    }
+
+    int totalNumExecs = 0;
+    for (int i = 0; i < large.length; i++) {
+      try {
+        int _result = SearchUtils.binarySearch(large, i * 3);
+      } catch (Exception err) {
+        pen.println("Unable to find value in array.");
+      }
+      totalNumExecs += SearchUtils.getNumExecs();
+    }
+
+    pen.println("Average number of comparisons: " + (totalNumExecs / 50000));
+
     pen.close();
   } // main(String[])
 } // class SearchUtils

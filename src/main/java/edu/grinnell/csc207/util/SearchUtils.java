@@ -10,6 +10,8 @@ import java.util.function.Predicate;
  * @author Samuel A. Rebelsky (starter code)
  */
 public class SearchUtils {
+  private static int numExecs = 0;
+
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
@@ -31,8 +33,23 @@ public class SearchUtils {
    * @post
    *   values[index] == val
    */
-  static int iterativeBinarySearch(int[] vals, int i) throws Exception {
-    return 0;   // STUB
+  static int iterativeBinarySearch(int[] vals, int val) throws Exception {
+    int lb = 0;
+    int ub = vals.length - 1;
+
+    while (lb <= ub) {
+      numExecs++;
+      int candidateIndex = (ub + lb) / 2;
+      int candidate = vals[candidateIndex];
+      if (candidate == val) {
+        return candidateIndex;
+      } else if (candidate < val) {
+        lb = candidateIndex + 1;
+      } else if (candidate > val) {
+        ub = candidateIndex - 1;
+      }
+    }
+    throw new Exception();
   } // iterativeBinarySearch
 
   /**
@@ -57,6 +74,7 @@ public class SearchUtils {
    *   values[index] == val
    */
   static int recursiveBinarySearch(int[] vals, int val, int lb, int ub) throws Exception {
+    numExecs++;
     if (lb > ub) { // reached end of search
       throw new Exception("Value " + val + " not found");
     } // if
@@ -146,7 +164,16 @@ public class SearchUtils {
    *   values[index] == val
    */
   public static int binarySearch(int[] vals, int i) throws Exception {
-    return recursiveBinarySearch(vals, i, 0, vals.length - 1);
+    numExecs = 0;
+    // return recursiveBinarySearch(vals, i, 0, vals.length - 1);
+    return iterativeBinarySearch(vals, i);
   } // binarySearch
 
+  /**
+   * Return how many comparisons were performed by the most recent execution of binarySearch.
+   * @return The number of comparisons.
+   */
+  public static int getNumExecs() {
+    return numExecs;
+  } // getNumExecs()
 } // class SearchUtils
