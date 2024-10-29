@@ -42,6 +42,10 @@ public class SearchUtils {
    *   A sorted array of integers
    * @param val
    *   An integer we're searching for
+   * @param lb
+   *   The lower bound of the current search range, inclusive
+   * @param ub
+   *   The upper bound of the current search range, inclusive
    * @return
    *   index, an index of val (if one exists)
    * @throws Exception
@@ -52,8 +56,20 @@ public class SearchUtils {
    * @post
    *   values[index] == val
    */
-  static int recursiveBinarySearch(int[] vals, int i) throws Exception {
-    return 0;   // STUB
+  static int recursiveBinarySearch(int[] vals, int val, int lb, int ub) throws Exception {
+    if (lb > ub) { // reached end of search
+      throw new Exception("Value " + val + " not found");
+    } // if
+
+    int candidateIndex = (ub + lb) / 2;
+    int candidate = vals[candidateIndex];
+    if (candidate < val) {
+      return recursiveBinarySearch(vals, val, candidateIndex + 1, ub);
+    } else if (candidate > val) {
+      return recursiveBinarySearch(vals, val, lb, candidateIndex - 1);
+    } else { // candidate == i
+      return candidateIndex;
+    } // if-else
   } // recursiveBinarySearch
 
   /**
@@ -130,9 +146,7 @@ public class SearchUtils {
    *   values[index] == val
    */
   public static int binarySearch(int[] vals, int i) throws Exception {
-    return 0;
-    // return interativeBinarySearch(vals, i);
-    // return recursiveBinarySearch(vals, i);
+    return recursiveBinarySearch(vals, i, 0, vals.length - 1);
   } // binarySearch
 
 } // class SearchUtils
