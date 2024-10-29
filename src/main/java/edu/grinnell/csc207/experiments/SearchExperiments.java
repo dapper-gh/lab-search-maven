@@ -42,6 +42,13 @@ public class SearchExperiments {
       pen.println("There are no strings of fewer than five letters.");
     } // try/catch
 
+    try {
+      int index = SearchUtils.binarySearch(tmp, "uniform", (a, b) -> a.compareTo(b));
+      pen.println("Uniform is at index: " + index);
+    } catch (Exception e) {
+      pen.println("Could not find uniform.");
+    } // try-catch
+
     int[] large = new int[50000];
     for (int i = 0; i < large.length; i++) {
       large[i] = i * 3;

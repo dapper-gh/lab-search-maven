@@ -33,7 +33,7 @@ public class TestSearch {
    * @return
    *   The string "binarySearch(values, val)"
    */
-  String bsCall(int[] values, int val) {
+  String bsCall(Integer[] values, int val) {
     return String.format("binarySearch(%s, %d)", Arrays.toString(values), val);
   } // bsCall
 
@@ -48,9 +48,9 @@ public class TestSearch {
    * @param val
    *   The value we're searching for.
    */
-  void assertBinarySearchFinds(int expected, int[] values, int val) 
+  void assertBinarySearchFinds(int expected, Integer[] values, int val) 
       throws Exception {
-    assertEquals(expected, SearchUtils.binarySearch(values, val),
+    assertEquals(expected, SearchUtils.binarySearch(values, val, (a, b) -> a - b),
         () -> bsCall(values, val));
   } // assertBinarySearchFinds(int, int[], int)
 
@@ -63,9 +63,9 @@ public class TestSearch {
    * @param val
    *   The value we're searching for.
    */
-  void assertBinarySearchFails(int[] values, int val) throws Exception {
+  void assertBinarySearchFails(Integer[] values, int val) throws Exception {
     assertThrows(Exception.class,
-        () -> SearchUtils.binarySearch(values, val),
+        () -> SearchUtils.binarySearch(values, val, (a, b) -> a - b),
         () -> bsCall(values, val));
   } // assertBinarySearchFails()
 
@@ -78,7 +78,7 @@ public class TestSearch {
    */
   @Test
   void testBinarySearchEmpty() throws Exception {
-    assertBinarySearchFails(new int[] { }, 0);
+    assertBinarySearchFails(new Integer[] { }, 0);
   } // testSearchEmpty()
 
   /**
@@ -86,9 +86,9 @@ public class TestSearch {
    */
   @Test
   void testBinarySearchOne() throws Exception {
-    assertBinarySearchFinds(0, new int[] { 5 }, 5);
-    assertBinarySearchFails(new int[] { 5 }, 0);
-    assertBinarySearchFails(new int[] { 5 }, 10);
+    assertBinarySearchFinds(0, new Integer[] { 5 }, 5);
+    assertBinarySearchFails(new Integer[] { 5 }, 0);
+    assertBinarySearchFails(new Integer[] { 5 }, 10);
   } // testBinarySearchOne()
 
   /**
@@ -96,17 +96,17 @@ public class TestSearch {
    */
   @Test
   void testBinarySearchTwo() throws Exception {
-    assertBinarySearchFinds(0, new int[] { 7, 11 }, 7);
-    assertBinarySearchFinds(1, new int[] { 7, 11 }, 11);
-    assertBinarySearchFails(new int[] { 7, 11 }, 0);
-    assertBinarySearchFails(new int[] { 7, 11 }, 10);
-    assertBinarySearchFails(new int[] { 7, 11 }, 20);
+    assertBinarySearchFinds(0, new Integer[] { 7, 11 }, 7);
+    assertBinarySearchFinds(1, new Integer[] { 7, 11 }, 11);
+    assertBinarySearchFails(new Integer[] { 7, 11 }, 0);
+    assertBinarySearchFails(new Integer[] { 7, 11 }, 10);
+    assertBinarySearchFails(new Integer[] { 7, 11 }, 20);
   } // testBinarySearchTwo()
 
   @Test
   void testBinarySearchDuplicates() throws Exception {
-    int[] dup = new int[] {0, 1, 1, 2, 3, 4};
-    int dupIndex = SearchUtils.binarySearch(dup, 1);
+    Integer[] dup = new Integer[] {0, 1, 1, 2, 3, 4};
+    int dupIndex = SearchUtils.binarySearch(dup, 1, (a, b) -> a - b);
     assertTrue(
       dupIndex == 1 || dupIndex == 2,
       "binarySearch should find one of many duplicate values (index=1 or index=2), found index " + dupIndex
@@ -115,16 +115,16 @@ public class TestSearch {
 
   @Test
   void testBinarySearchOdd() throws Exception {
-    assertBinarySearchFinds(2, new int[] {0, 1, 2}, 2);
-    assertBinarySearchFinds(2, new int[] {0, 2, 4, 6, 8, 10, 12}, 4);
-    assertBinarySearchFails(new int[] {-1, 4, 6}, 0);
+    assertBinarySearchFinds(2, new Integer[] {0, 1, 2}, 2);
+    assertBinarySearchFinds(2, new Integer[] {0, 2, 4, 6, 8, 10, 12}, 4);
+    assertBinarySearchFails(new Integer[] {-1, 4, 6}, 0);
   } // testBinarySearchOdd()
 
   @Test
   void testBinarySearchEven() throws Exception {
-    assertBinarySearchFinds(2, new int[] {0, 1, 2, 3}, 2);
-    assertBinarySearchFinds(2, new int[] {0, 2, 4, 6, 8, 10, 12, 14}, 4);
-    assertBinarySearchFails(new int[] {-1, 4, 6, 8}, 0);
+    assertBinarySearchFinds(2, new Integer[] {0, 1, 2, 3}, 2);
+    assertBinarySearchFinds(2, new Integer[] {0, 2, 4, 6, 8, 10, 12, 14}, 4);
+    assertBinarySearchFails(new Integer[] {-1, 4, 6, 8}, 0);
   } // testBinarySearchEven()
 
   @Test
@@ -133,7 +133,7 @@ public class TestSearch {
     // Create an array of size s, containing the values 0, 2, 4, ... 2*(s-1)
     // For all i from 0 to s-1, inclusive
     for (int i = 1; i <= 32; i ++) {
-      int[] current = new int[i];
+      Integer[] current = new Integer[i];
 
       for (int j = 0; j < current.length; j++) {
         current[j] = 2 * j;

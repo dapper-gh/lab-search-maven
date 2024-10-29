@@ -1,6 +1,7 @@
 package edu.grinnell.csc207.util;
 
 import java.util.function.Predicate;
+import java.util.Comparator;
 
 /**
  * Assorted utilities for searching structures.
@@ -46,6 +47,44 @@ public class SearchUtils {
       } else if (candidate < val) {
         lb = candidateIndex + 1;
       } else if (candidate > val) {
+        ub = candidateIndex - 1;
+      }
+    }
+    throw new Exception();
+  } // iterativeBinarySearch
+
+
+  /**
+   * Search for val in values, return the index of an instance of val.
+   *
+   * @param values
+   *   A sorted array of T
+   * @param val
+   *   A T we're searching for
+   * @return
+   *   index, an index of val (if one exists)
+   * @throws Exception
+   *   If there is no i s.t. values[i] == val
+   * @pre
+   *   values is sorted in increasing order.  That is, values[i] <
+   *   values[i+1] for all reasonable i.
+   * @post
+   *   values[index] == val
+   */
+  static <T> int iterativeBinarySearch(T[] vals, T val, Comparator<T> compare) throws Exception {
+    int lb = 0;
+    int ub = vals.length - 1;
+
+    while (lb <= ub) {
+      numExecs++;
+      int candidateIndex = (ub + lb) / 2;
+      T candidate = vals[candidateIndex];
+      int compared = compare.compare(candidate, val);
+      if (compared == 0) {
+        return candidateIndex;
+      } else if (compared < 0) {
+        lb = candidateIndex + 1;
+      } else if (compared > 0) {
         ub = candidateIndex - 1;
       }
     }
@@ -168,6 +207,30 @@ public class SearchUtils {
     // return recursiveBinarySearch(vals, i, 0, vals.length - 1);
     return iterativeBinarySearch(vals, i);
   } // binarySearch
+
+  /**
+   * Search for val in values, return the index of an instance of val.
+   *
+   * @param values
+   *   A sorted array of T
+   * @param value
+   *   A T we're searching for
+   * @param compare
+   *   The comparator used to compare T
+   * @return
+   *   index, an index of val (if one exists)
+   * @throws Exception
+   *   If there is no i s.t. values[i] == val
+   * @pre
+   *   values is sorted in increasing order.  That is, values[i] <
+   *   values[i+1] for all reasonable i.
+   * @post
+   *   values[index] == val
+   */
+  public static <T> int binarySearch(T[] values, T value, Comparator<T> compare) throws Exception {
+    return iterativeBinarySearch(values, value, compare);
+  } // binarySearch
+  
 
   /**
    * Return how many comparisons were performed by the most recent execution of binarySearch.
